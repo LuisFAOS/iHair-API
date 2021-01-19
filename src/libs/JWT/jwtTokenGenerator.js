@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken"
 
-
 async function tokenGenerator(userDatas, role) {
 	return jwt.sign({
 		client: {

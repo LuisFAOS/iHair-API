@@ -9,7 +9,6 @@ import getSalonFromDB from "../../models/salonModels/getSalon.model.js"
 import {getSalonOwnerFromDB} from "../../models/salonOwnerModels/getSalonOwner.model.js"
 import addSalonInDB from "../../models/salonModels/createSalon.model.js"
 import addOpeningHoursInDB from "../../models/openingHoursModels/createOpeningHours.model.js"
-import addSalonImgsInDB from "../../models/salonModels/addSalonImgs.model.js"
 import updateSalonOwnerInDB from "../../models/salonOwnerModels/updateSalonOwner.model.js"
 
 

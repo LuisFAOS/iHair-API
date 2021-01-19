@@ -1,7 +1,6 @@
 import sgMail from "@sendgrid/mail"
-import Queue from "../../libs/queueBull/Queue.js"
 
-sgMail.setApiKey(process.env.SENDGRID_KEY)
+sgMail.setApiKey("SG."+process.env.SENDGRID_KEY)
 
 function sendEmailHandler({
      functionName,
