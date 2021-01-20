@@ -1,5 +1,7 @@
+Drop database ihair_db;
 CREATE DATABASE ihair_db;
 USE ihair_db;
+
 
 CREATE TABLE normalUser(
 	id INT PRIMARY KEY AUTO_INCREMENT ,
@@ -20,6 +22,7 @@ CREATE TABLE salonOwner (
 	passwordHashed VARCHAR(100) NOT NULL,
 	profileImgUrl VARCHAR(100) NOT NULL,
 	certificateImgUrl VARCHAR(100) NULL,
+    hasSalon boolean DEFAULT FALSE NOT NULL,
 	isVerified BOOLEAN NOT NULL DEFAULT FALSE,
 	emailToken VARCHAR(50) NULL,
 	createdAt VARCHAR(100) NOT NULL
