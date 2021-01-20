@@ -5,7 +5,7 @@ async function openingHoursValidationHandler(openingHoursArray) {
           if (openingHoursArray && openingHoursArray.length == 7) {
                for (var i = 0; i <= openingHoursArray.length; i++) {
                     const workPeriod = openingHoursArray[i]
-                    if (workPeriod !== "Fechado") {
+                    if (workPeriod !== "fechado") {
                          await openingHoursSchema.validate({
                               workPeriod
                          })

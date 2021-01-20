@@ -3,10 +3,10 @@ import salonServiceSchema from "./schemas/salonService.schema.js"
 
 async function salonServiceValidationHandler(salonServicesArray) {
      try {
-          if (!salonServicesArray)
+          if(!salonServicesArray)
                return "Você precisa inserir os serviços do salão!"
 
-          for (var i = 0; i <= salonServicesArray.length - 1; i++) {
+          for(var i = 0; i <= salonServicesArray.length - 1; i++){
                await salonServiceSchema.validate({
                     ...salonServicesArray[i]
                })
