@@ -5,7 +5,7 @@ async function addSalonInDB(salonDatas, salonOwnerID) {
      const {
           CEP,
           addressNumber,
-          salonName,
+          name,
           salonDescription,
           CNPJ,
           contactPhone,
@@ -16,7 +16,7 @@ async function addSalonInDB(salonDatas, salonOwnerID) {
      await dbHandler("salon").insert({
           CEP,
           addressNumber,
-          salonName,
+          name,
           salonDescription,
           CNPJ,
           contactPhone,
