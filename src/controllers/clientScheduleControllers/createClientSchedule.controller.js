@@ -11,7 +11,7 @@ async function createClientSchedule(req, res) {
           normalUserID
      } = req.body
 
-     const dbResultClientSchedule = await getClientScheduleFromDB({
+     const dbResultClientSchedules = await getClientScheduleFromDB({
           salonID
      })
 

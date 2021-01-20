@@ -8,22 +8,18 @@ import addSalonServiceInDB from "../../models/salonServiceModels/createSalonServ
 
 async function createSalonService(req, res) {
      const authToken = req.headers["authorization"] || req.headers["token"]
-     const {
-          client
-     } = await jwtDecoder(authToken)
+     const { client } = await jwtDecoder(authToken)
 
-     const {
-          id,
-          isVerified
-     } = await getSalonFromDB({
+     const { id, isVerified } = await getSalonFromDB({
           salonOwnerID: client.id
      })
-     if (isVerified && id) {
+
+     if(isVerified && id){
           const salonServices = req.body
 
-          const validSalonServicesDatas = await salonServiceValidationHandler(salonServices)
-          if (validSalonServicesDatas) {
-               res.status(400).send(validSalonServicesDatas)
+          const validSalonServices = await salonServiceValidationHandler(salonServices)
+          if (validSalonServices) {
+               res.status(400).send(validSalonServices)
                return
           }
 

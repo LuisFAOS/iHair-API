@@ -1,7 +1,7 @@
 import updateEntityInDB from "../models/updateEntity.model.js"
 import getNormalUserFromDB from "../models/normalUserModels/getNormalUserModel.js"
 import {
-     getSalonOwnerFromDB
+     getSalonOwnerAllDatasFromDB
 } from "../models/salonOwnerModels/getSalonOwner.model.js"
 
 
@@ -15,7 +15,7 @@ async function emailConfirmationHandler(req, res) {
           emailToken,
           email
      })
-     const dbResultOwnerDatas = await getSalonOwnerFromDB({
+     const dbResultOwnerDatas = await getSalonOwnerAllDatasFromDB({
           emailToken,
           email
      })

@@ -22,9 +22,8 @@ async function getSalon(req, res) {
           }
 
      if (whereProp) {
-          const dbResultSalonDatas = await getSalonFromDB({
-               ...whereProp
-          })
+          const dbResultSalonDatas = await getSalonFromDB(whereProp)
+
           const dbResultOpeningHoursDatas = await getOpeningHoursFromDB({
                salonID: dbResultSalonDatas.id
           })

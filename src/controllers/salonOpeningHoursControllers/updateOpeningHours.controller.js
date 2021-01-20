@@ -7,28 +7,22 @@ import updateOpeningHoursInDB from "../../models/openingHoursModels/updateOpenin
 
 async function updateOpeningHours(req, res) {
      const {
-          openingHoursDatas
+          openingHours
      } = req.body
 
-     const validOpeningHours = await openingHoursValidationHandler(openingHoursDatas)
+     const validOpeningHours = await openingHoursValidationHandler(openingHours)
      if (validOpeningHours) {
-          res.status(400).send(validOpeningHpurs)
+          res.status(400).send(validOpeningHours)
           return
      }
 
      const authToken = req.headers["authorization"] || req.headers["token"]
-     const {
-          client
-     } = await jwtDecoder(authToken)
+     const { client } = await jwtDecoder(authToken)
 
-     const {
-          isVerified,
-          id
-     } = await getSalonFromDB({
-          salonOwnerID: client.id
-     })
+     const { isVerified, id } = await getSalonFromDB({ salonOwnerID: client.id })
+
      if (isVerified && id) {
-          await updateOpeningHoursInDB(openingHoursDatas, {
+          await updateOpeningHoursInDB(openingHours, {
                salonID: id
           })
           res.status(202).send("Dados atualizados com sucesso!")

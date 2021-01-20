@@ -6,17 +6,11 @@ import getSalonServiceFromDB from "../../models/salonServiceModels/getSalonServi
 
 async function getAllSalonServices(req, res) {
      const authToken = req.headers["authorization"] || req.headers["token"]
-     const {
-          client
-     } = await jwtDecoder(authToken)
+     const { client } = await jwtDecoder(authToken)
 
-     const {
-          isVerified,
-          id
-     } = await getSalonFromDB({
-          salonOwnerID: client.id
-     })
-     if (isVerified && id) {
+     const { isVerified, id } = await getSalonFromDB({ salonOwnerID: client.id })
+
+     if(isVerified && id){
           const dbResultSalonServicesDatas = await getSalonServiceFromDB({
                salonID: client.id
           })

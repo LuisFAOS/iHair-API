@@ -27,6 +27,7 @@ async function getSalonOwnerByID(req, res) {
           }
 
           res.status(202).send(dbResultsOwnerDatas)
+          return
      }
      res.status(400).send("ID do dono inválido!")
 }
