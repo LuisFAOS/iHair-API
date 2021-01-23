@@ -1,10 +1,8 @@
-import normalUserValidationHandler from "../../validations/normalUserValidation.js"
-import addNormalUserToDB from "../../models/normalUserModels/createNormalUserModel.js"
-import getNormalUserFromDB from "../../models/normalUserModels/getNormalUserModel.js"
+import normalUserValidationHandler from "../../validations/normalUser.validation.js"
+
+import {addNormalUserToDB, getNormalUserFromDB} from "../../models/normalUser.models.js"
 
 import Queue from "../../libs/queueBull/Queue.js"
-import tokenGenerator from "../../libs/JWT/jwtTokenGenerator.js"
-import tokenDecoder from "../../libs/JWT/jwtTokenDecoder.js"
 
 import bcrypt from "bcryptjs"
 import {
@@ -14,9 +12,9 @@ import {
 async function createNormalUser(req, res) {
      const userDatas = req.body
 
-     const validUserDatas = await normalUserValidationHandler(userDatas)
-     if (validUserDatas) {
-          res.status(400).send(validUserDatas)
+     const possibleErrorMessage = await normalUserValidationHandler(userDatas)
+     if (possibleErrorMessage) {
+          res.status(400).send(possibleErrorMessage)
           return;
      }
 

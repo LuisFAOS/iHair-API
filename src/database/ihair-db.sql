@@ -22,7 +22,7 @@ CREATE TABLE salonOwner (
 	passwordHashed VARCHAR(100) NOT NULL,
 	profileImgUrl VARCHAR(100) NOT NULL,
 	certificateImgUrl VARCHAR(100) NULL,
-    hasSalon boolean DEFAULT FALSE NOT NULL,
+    hasSalon BOOLEAN DEFAULT FALSE NOT NULL,
 	isVerified BOOLEAN NOT NULL DEFAULT FALSE,
 	emailToken VARCHAR(50) NULL,
 	createdAt VARCHAR(100) NOT NULL
@@ -63,7 +63,7 @@ CREATE TABLE salonService(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	`name` VARCHAR(50) NOT NULL,
 	`description` VARCHAR(150) NULL,
-	price double(5, 2) NOT NULL,
+	price DOUBLE(5, 2) NOT NULL,
 	avgTime INT NOT NULL,
 	salonID INT NOT NULL,
 	FOREIGN KEY (salonID) references salon(id)
@@ -72,7 +72,7 @@ CREATE TABLE salonService(
 CREATE TABLE clientSchedule(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	scheduleDate DATETIME(3) NOT NULL,
-    `status` ENUM('EM ABERTO','FECHADO','CANCELADO','FALTOU') NOT NULL,
+    `status` ENUM('EM ABERTO','FECHADO','CANCELADO','FALTOU') DEFAULT "EM ABERTO" NOT NULL,
 	createdAt DATETIME(3) NOT NULL,
 	normalUserID INT NOT NULL,
 	salonServiceID INT NOT NULL,
@@ -81,6 +81,22 @@ CREATE TABLE clientSchedule(
 	FOREIGN KEY (salonServiceID) REFERENCES salonService(id),
 	FOREIGN KEY (salonID) REFERENCES salon(id)
 );
+
+CREATE TABLE rating(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    `general` DOUBLE(2, 1) NOT NULL,
+    `reception` DOUBLE(2, 1) NULL,
+    `isCleaning` BOOLEAN NULL,
+    `salonGadgets` DOUBLE(2, 1) NULL,
+    `serviceQuality` DOUBLE(2, 1) NULL,
+    `comment` VARCHAR(200) NULL,
+    `chanceDisclose` DOUBLE(2, 1) NULL,
+    normalUserID INT NOT NULL,
+    salonID INT NOT NULL,
+    FOREIGN KEY (normalUserID) REFERENCES normalUser(id),
+	FOREIGN KEY (salonID) REFERENCES salon(id)
+);
+
 
 CREATE TABLE denunciation(
 	id INT PRIMARY KEY AUTO_INCREMENT,

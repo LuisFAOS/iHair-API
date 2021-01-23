@@ -1,5 +1,7 @@
-import getClientScheduleFromDB from "../../models/clientScheduleModels/getClientSchedule.model.js"
+import {getSalonFromDB} from "../../models/salon.models.js"
+import {getClientScheduleFromDB} from "../../models/clientSchedule.models.js"
 
+import jwtDecoder from "../../libs/JWT/jwtTokenDecoder.js"
 
 async function getClientSchedule(req, res) {
      const authToken = req.headers["authorization"] || req.headers["token"]
@@ -7,14 +9,20 @@ async function getClientSchedule(req, res) {
           client,
           permissionOf
      } = await jwtDecoder(authToken)
-     var whereProps
 
+     var whereProps
      if (permissionOf === "normalUser") {
           whereProps = {
                normalUserID: client.id
           }
      } else {
-          whereProps = req.body.condition
+          const {id} = await getSalonFromDB({
+               salonOwnerID: client.id
+          })
+
+          whereProps = {
+               salonID: id
+          }
      }
 
      const dbResultClientSchedules = await getClientScheduleFromDB(whereProps)

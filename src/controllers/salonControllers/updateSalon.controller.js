@@ -2,7 +2,7 @@ import jwtDecoder from "../../libs/JWT/jwtTokenDecoder.js"
 
 import salonValidationHandler from "../../validations/salon.validation.js"
 
-import updateSalonInDB from "../../models/salonModels/updateSalon.model.js"
+import {updateSalonInDB} from "../../models/salon.models.js"
 
 
 async function updateSalon(req, res) {
@@ -11,13 +11,15 @@ async function updateSalon(req, res) {
           client
      } = await jwtDecoder(authToken)
 
-     const salonDatas = req.body
-     const validSalonDatas = await salonValidationHandler(salonDatas)
-     if (validSalonDatas) {
-          res.status(400).send(validSalonDatas)
+     const updatedSalonDatas = req.body.salonDatas
+
+     const possibleErrorMessage = await salonValidationHandler(updatedSalonDatas, true)
+     if (possibleErrorMessage) {
+          res.status(400).send(possibleErrorMessage)
           return
      }
-     await updateSalonInDB(salonDatas, {
+
+     await updateSalonInDB(updatedSalonDatas, {
           salonOwnerID: client.id
      })
 

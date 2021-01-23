@@ -2,6 +2,7 @@ import * as salonControllers from "../controllers/salonControllers/index.js"
 
 import express from "express"
 
+import verifySalon from "../middlewares/verifySalonHandler.js"
 import verifyAuth from "../middlewares/authHandler.js"
 
 const router = express.Router()
@@ -14,6 +15,7 @@ router.post('/salon',
 
 //get salon datas
 router.get('/salon',
+     verifySalon,
      (req, res, next) => verifyAuth(req, res, next, "dont need permission"),
      salonControllers.get)
 
@@ -26,5 +28,10 @@ router.get('/salon/all',
 router.patch('/salon',
      (req, res, next) => verifyAuth(req, res, next, "salonOwner"),
      salonControllers.update)
+
+
+router.patch('/salon-banner',
+     (req, res, next) => verifyAuth(req, res, next, "salonOwner"),
+     salonControllers.updateBanner)
 
 export default router

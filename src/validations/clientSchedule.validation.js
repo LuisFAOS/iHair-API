@@ -3,19 +3,17 @@ import Yup from "yup"
 
 async function clientScheduleValidationHandler(clientSchedule) {
      try {
+          const today = new Date()
+          today.setMinutes(today.getMinutes() + 10)
           const dateSchema = Yup.object().shape({
-               date: Yup.date("Data do agendamento não está válida")
-                    .min(new Date(), "Não é possivel inserir uma data anterior a hoje")
+               scheduleDate: Yup.date("Data do agendamento não está válida")
+                    .min(today, "Data muito proxima! Por favor, insira outra")
+                    .required("Data do agendamento obrigatoria")
           })
 
           await dateSchema.validate({
                ...clientSchedule
           })
-
-          const possibleSchedulesStatus = ["EM ABERTO", "FECHADO", "CANCELADO", "FALTOU"]
-          if (!possibleSchedulesStatus.includes(clientSchedule.status)) {
-               return "Status de agendamento inválido!"
-          }
 
      } catch (error) {
           return error.message

@@ -1,6 +1,6 @@
 import salonOwnerValidationHandler from "../../validations/salonOwner.validation.js"
 
-import updateSalonOwnerDatasInDB from "../../models/salonOwnerModels/updateSalonOwner.model.js"
+import {updateSalonOwnerInDB} from "../../models/salonOwner.models.js"
 
 import jwtDecoder from "../../libs/JWT/jwtTokenDecoder.js";
 
@@ -12,14 +12,16 @@ async function updateSalonOwner(req, res) {
      } = await jwtDecoder(authToken)
 
      ownerDatas.password="**********"
-     const validOwnerDatas = await salonOwnerValidationHandler(ownerDatas)
-     if (validOwnerDatas) {
-          res.status(400).send(validOwnerDatas)
+     const possibleErrorMessage = await salonOwnerValidationHandler(ownerDatas)
+     if (possibleErrorMessage) {
+          res.status(400).send(possibleErrorMessage)
           return
      }
-
      delete ownerDatas.password
-     await updateSalonOwnerDatasInDB(ownerDatas, client.id)
+     
+     await updateSalonOwnerInDB(ownerDatas, client.id)
+
+     res.status(202).send("Dados do proprietário atualizado com sucesso!")
 }
 
 export default updateSalonOwner

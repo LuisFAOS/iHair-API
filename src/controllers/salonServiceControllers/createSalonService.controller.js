@@ -2,32 +2,29 @@ import salonServiceValidationHandler from "../../validations/salonService.valida
 
 import jwtDecoder from "../../libs/JWT/jwtTokenDecoder.js"
 
-import getSalonFromDB from "../../models/salonModels/getSalon.model.js"
-import addSalonServiceInDB from "../../models/salonServiceModels/createSalonService.model.js"
+import {getSalonFromDB} from "../../models/salon.models.js"
+import {addSalonServiceInDB} from "../../models/salonService.models.js"
 
 
 async function createSalonService(req, res) {
      const authToken = req.headers["authorization"] || req.headers["token"]
      const { client } = await jwtDecoder(authToken)
 
-     const { id, isVerified } = await getSalonFromDB({
+     const { id } = await getSalonFromDB({
           salonOwnerID: client.id
      })
 
-     if(isVerified && id){
-          const salonServices = req.body
+     const salonServices = req.body
 
-          const validSalonServices = await salonServiceValidationHandler(salonServices)
-          if (validSalonServices) {
-               res.status(400).send(validSalonServices)
-               return
-          }
-
-          await addSalonServiceInDB(salonServices, id)
-          res.status(201).send("Serviço(s) adicionado(s) com sucesso!")
+     const possibleErrorMessage = await salonServiceValidationHandler(salonServices)
+     if (possibleErrorMessage) {
+          res.status(400).send(possibleErrorMessage)
           return
      }
-     res.status(400).send("Ou seu salão não foi verificado ainda, ou você não cadastrou nenhum até o momento!")
+
+     await addSalonServiceInDB(salonServices, id)
+
+     res.status(201).send("Serviço(s) adicionado(s) com sucesso!")
 }
 
 export default createSalonService

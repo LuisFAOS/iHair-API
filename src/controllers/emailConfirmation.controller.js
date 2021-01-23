@@ -1,8 +1,8 @@
 import updateEntityInDB from "../models/updateEntity.model.js"
-import getNormalUserFromDB from "../models/normalUserModels/getNormalUserModel.js"
+import {getNormalUserFromDB} from "../models/normalUser.models.js"
 import {
      getSalonOwnerAllDatasFromDB
-} from "../models/salonOwnerModels/getSalonOwner.model.js"
+} from "../models/salonOwner.models.js"
 
 
 async function emailConfirmationHandler(req, res) {

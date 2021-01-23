@@ -1,4 +1,4 @@
-export { default as create } from "./createNormalUserController.js"
-export { default as delete } from "./deleteNormalUserController.js"
-export { default as update } from "./updateNormalUserController.js"
+export { default as create } from "./createNormalUser.controller.js"
+export { default as delete } from "./deleteNormalUser.controller.js"
+export { default as update } from "./updateNormalUser.controller.js"
 

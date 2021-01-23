@@ -3,8 +3,9 @@ import {
      cnpj
 } from "cpf-cnpj-validator"
 import salonSchema from "./schemas/salon.schema.js"
+import base64Schema from "./schemas/base64.schema.js"
 
-async function salonValidationHandler(salonDatas) {
+async function salonValidationHandler(salonDatas, isUpdate) {
      try {
           await cepPromise(salonDatas.CEP)
 
@@ -12,11 +13,16 @@ async function salonValidationHandler(salonDatas) {
           if (!isValidCNPJ)
                return "CNPJ inválido, tente outro!"
 
-          const matchesBlobImg = salonDatas.bannerImgInBase64.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-          
+          if(!isUpdate){ 
+               const matchesBlobImg = salonDatas.bannerImgInBase64.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+
+               await base64Schema.validate({
+                    imgInBase64: matchesBlobImg[2]
+               })
+          }
+
           await salonSchema.validate({
                ...salonDatas,
-               bannerImgInBase64: matchesBlobImg[2]
           })
      } catch (error) {
           return error.message

@@ -1,7 +1,7 @@
-import tokenDecoder from "../../libs/JWT/jwtTokenDecoder.js"
-import tokenGenerator from "../../libs/JWT/jwtTokenGenerator.js"
+import jwtDecoder from "../../libs/JWT/jwtTokenDecoder.js"
+import jwtGenerator from "../../libs/JWT/jwtTokenGenerator.js"
 
-import getNormalUserFromDB from "../../models/normalUserModels/getNormalUserModel.js"
+import {getNormalUserFromDB} from "../../models/normalUser.models.js"
 
 import bcrypt from "bcryptjs"
 
@@ -10,7 +10,7 @@ async function getUserByID(req, res) {
 
      const {
           client
-     } = await tokenDecoder(authToken)
+     } = await jwtDecoder(authToken)
 
      const dbResultUserDatas = await getNormalUserFromDB({
           id: client.id
@@ -41,11 +41,11 @@ async function loginHandler(req, res) {
           return
      }
 
-     const authToken = await tokenGenerator(dbResultUserDatas, "normalUser");
+     const authToken = await jwtGenerator(dbResultUserDatas, "normalUser");
      const {
           client,
           permissionOf
-     } = await tokenDecoder(authToken)
+     } = await jwtDecoder(authToken)
 
      res.status(202).send({
           client,

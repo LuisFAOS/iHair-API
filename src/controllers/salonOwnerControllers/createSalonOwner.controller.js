@@ -7,23 +7,23 @@ import {
 
 import {
      getSalonOwnerFromDB
-} from "../../models/salonOwnerModels/getSalonOwner.model.js"
-import addSalonOwnerToDB from "../../models/salonOwnerModels/createSalonOwner.model.js"
+} from "../../models/salonOwner.models.js"
+import {addSalonOwnerToDB} from "../../models/salonOwner.models.js"
 
 import Queue from "../../libs/queueBull/Queue.js"
 import uploadImgToAzure from "../../libs/azure/uploadImgToAzure.js"
 
 async function createSalonOwner(req, res) {
-     const ownerDatas = req.body
+     const salonOwner = req.body
 
-     const validOwnerDatas = await salonOwnerValidationHandler(ownerDatas)
-     if (validOwnerDatas) {
-          res.status(400).send(validOwnerDatas)
+     const possibleErrorMessage = await salonOwnerValidationHandler(salonOwner)
+     if (possibleErrorMessage) {
+          res.status(400).send(possibleErrorMessage)
           return
      }
 
      const dbResultsOwnerDatas = await getSalonOwnerFromDB({
-          email: ownerDatas.email
+          email: salonOwner.email
      })
      if (dbResultsOwnerDatas && !dbResultsOwnerDatas.isVerified) {
           res.status(400).send("Email já foi cadastrado, porém não foi confirmado. Por favor, acesse-o e confirme-o.")
@@ -33,34 +33,34 @@ async function createSalonOwner(req, res) {
           return
      }
 
-     const hashedPassword = await bcrypt.hash(ownerDatas.password, 8)
-     ownerDatas.passwordHashed = hashedPassword
-     delete ownerDatas.password
+     const hashedPassword = await bcrypt.hash(salonOwner.password, 8)
+     salonOwner.passwordHashed = hashedPassword
+     delete salonOwner.password
 
      const emailToken = uuid().toString()
      const emailProps = {
           functionName: "sendEmailForValidation",
           emailDatas: {
                ...{
-                    ...ownerDatas,
-                    name: ownerDatas.completeName
+                    ...salonOwner,
+                    name: salonOwner.completeName
                },
                emailToken
           },
      }
 
-     ownerDatas.createdAt = new Date();
-     ownerDatas.emailToken = emailToken
+     salonOwner.createdAt = new Date();
+     salonOwner.emailToken = emailToken
 
-     ownerDatas.profileImgUrl = await uploadImgToAzure(ownerDatas.imgs.profileImgInBase64, "ownersprofileimgs")
-     //ownerDatas.certificateImgUrl = await uploadImgToAzure(ownerDatas.imgs.certificateImgInBase64, "ownerscertificates")
-     delete ownerDatas.imgs
+     salonOwner.profileImgUrl = await uploadImgToAzure(salonOwner.imgs.profileImgInBase64, "ownersprofileimgs")
+     //salonOwner.certificateImgUrl = await uploadImgToAzure(salonOwner.imgs.certificateImgInBase64, "ownerscertificates")
+     delete salonOwner.imgs
 
      await Queue.add("RegistrationEmail", {
           emailProps
      })
 
-     await addSalonOwnerToDB(ownerDatas)
+     await addSalonOwnerToDB(salonOwner)
 
      res.status(201).send("O dono do salão foi cadastrado, esperando confirmação do email.")
 }

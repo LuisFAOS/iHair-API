@@ -1,4 +1,4 @@
-import getAllSalonsFromDB from "../../models/salonModels/getAllSalons.model.js"
+import {getAllSalonsFromDB} from "../../models/salon.models.js"
 
 
 async function getAllSalons(req, res) {

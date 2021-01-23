@@ -5,7 +5,7 @@ import * as normalUserControllers from "../controllers/normalUserControllers/ind
 import {
     getUserByID,
     loginHandler
-} from "../controllers/normalUserControllers/getNormalUserControllers.js"
+} from "../controllers/normalUserControllers/getNormalUser.controllers.js"
 
 import verifyAuth from "../middlewares/authHandler.js"
 

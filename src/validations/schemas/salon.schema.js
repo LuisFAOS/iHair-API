@@ -18,8 +18,4 @@ export default Yup.object().shape({
           .min(3, "Nome do salão está muito curto!")
           .max(50, "Nome do salão está muito longo!")
           .required("O nome do salão é obrigatório!"),
-
-     bannerImgInBase64: Yup.string("O banner do salão deve ser uma string em base64!")
-          .matches("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$", "O banner do salão deve estar em base64!")
-          .required("O banner do salão é obrigatório!")
 })

@@ -3,7 +3,7 @@ import redisConfig from "../../config/redis.js"
 
 import * as jobs from "../../jobs/index.js"
 
-const queueList = Object.keys(jobs).map(job => ({
+const jobList = Object.keys(jobs).map(job => ({
      bull: new QueueBull(jobs[job].key, redisConfig),
      name: jobs[job].key,
      handle: jobs[job].handle,
@@ -12,14 +12,14 @@ const queueList = Object.keys(jobs).map(job => ({
 
 
 const Queue = {
-     queueList,
+     jobList,
      add(name, data) {
-          const queue = this.queueList.find(queue => queue.name === name)
+          const queue = this.jobList.find(queue => queue.name === name)
 
           return queue.bull.add(data, queue.options)
      },
      process() {
-          return this.queueList.forEach(queue => {
+          return this.jobList.forEach(queue => {
                queue.bull.process(queue.handle)
 
                queue.bull.on('failed', (job, error) => {

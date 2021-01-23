@@ -18,6 +18,7 @@ import salonOpeningHoursRoute from "./routes/salonOpeningHours.route.js"
 import salonOwnerRoutes from "./routes/salonOwner.routes.js"
 import salonServiceRoutes from "./routes/salonService.routes.js"
 import clientScheduleRoutes from "./routes/clientSchedule.routes.js"
+import ratingRoutes from "./routes/rating.routes.js"
 
 app.use(cors())
 app.use(bodyParser.urlencoded({
@@ -34,6 +35,7 @@ app.use(salonOwnerRoutes)
 app.use(salonServiceRoutes)
 app.use(salonOpeningHoursRoute)
 app.use(clientScheduleRoutes)
+app.use(ratingRoutes)
 
 app.use(errorHandler)
 

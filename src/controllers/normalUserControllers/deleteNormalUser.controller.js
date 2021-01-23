@@ -1,4 +1,4 @@
-import deleteNormalUserFromDB from "../../models/normalUserModels/deleteNormalUserModel.js"
+import {deleteNormalUserFromDB} from "../../models/normalUser.models.js"
 
 async function deleteNormalUser(req, res) {
      const authToken = req.headers['authorization'] ||

@@ -21,6 +21,11 @@ router.patch('/salon-owner',
      (req, res, next) => verifyAuth(req, res, next, "salonOwner"),
      salonOwnerControllers.update)
 
+
+router.patch('/salon-owner-img',
+     (req, res, next) => verifyAuth(req, res, next, "salonOwner"),
+     salonOwnerControllers.updateImgs)
+
 //get salon owner datas - route
 router.get('/salon-owner',
      (req, res, next) => verifyAuth(req, res, next, "dont need permission"),

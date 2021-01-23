@@ -1,4 +1,4 @@
-import tokenDecoder from "../libs/JWT/jwtTokenDecoder.js"
+import jwtDecoder from "../libs/JWT/jwtTokenDecoder.js"
 
 
 async function authenticator(req, res, next, necessaryRole) {
@@ -6,7 +6,7 @@ async function authenticator(req, res, next, necessaryRole) {
 		const authToken = req.headers['authorization'] || req.headers['x-access-token'] || req.headers['token']
 
 		if (authToken) {
-			const decodedToken = await tokenDecoder(authToken)
+			const decodedToken = await jwtDecoder(authToken)
 			if (necessaryRole === "dont need permission") {
 				next()
 			} else if (decodedToken.permissionOf === necessaryRole) {

@@ -22,10 +22,6 @@ export default Yup.object().shape({
                "O tel/cel não está no formato correto!")
           .required("O tel/cel é obrigatório!"),
 
-     profileImgInBase64: Yup.string("A imagem de perfil deve ser uma string em base64!")
-          .matches("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$", "A imagem do proprietário deve estar em base64!")
-          .required("A imagem de perfil é obrigatória!"),
-
      certificateImgInBase64: Yup.string("A imagem do certificad deve ser uma string em base64")
           .matches("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$", "A imagem do certificado deve estar em base64!")
 })

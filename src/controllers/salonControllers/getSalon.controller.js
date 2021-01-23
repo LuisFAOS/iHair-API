@@ -1,7 +1,8 @@
-import getSalonFromDB from "../../models/salonModels/getSalon.model.js"
-import getOpeningHoursFromDB from "../../models/openingHoursModels/getOpeningHours.model.js"
-
 import jwtDecoder from "../../libs/JWT/jwtTokenDecoder.js"
+
+import {getSalonFromDB} from "../../models/salon.models.js"
+import {getOpeningHoursFromDB} from "../../models/openingHours.models.js"
+
 
 
 async function getSalon(req, res) {
