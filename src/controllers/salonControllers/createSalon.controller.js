@@ -1,5 +1,4 @@
 import salonValidationHandler from "../../validations/salon.validation.js"
-import openingHoursValidationHandler from "../../validations/openingHours.validation.js"
 import salonImgValidationHandler from "../../validations/salonImg.validation.js"
 
 import jwtDecoder from "../../libs/JWT/jwtTokenDecoder.js"
@@ -7,7 +6,6 @@ import uploadImgToAzure from "../../libs/azure/uploadImgToAzure.js"
 
 import {getSalonFromDB, addSalonInDB} from "../../models/salon.models.js"
 import {getSalonOwnerFromDB, updateSalonOwnerInDB} from "../../models/salonOwner.models.js"
-import {addOpeningHoursInDB} from "../../models/openingHours.models.js"
 
 
 async function createSalon(req, res) {
@@ -26,7 +24,6 @@ async function createSalon(req, res) {
 
      const {
           salonDatas,
-          openingHours,
           salonImgsInBase64
      } = req.body
 
@@ -37,14 +34,11 @@ async function createSalon(req, res) {
           salonDatas.contactPhone = dbResultOwnerDatas.phone
      }
 
-     const possibleOpeningHoursErrorMessage = await openingHoursValidationHandler(openingHours)
      const possibleSalonErrorMessage = await salonValidationHandler(salonDatas)
      //const validSalonImgsDatas = await salonImgValidationHandler(salonImgsInBase64)
 
-     const possibleErrorMessage = possibleSalonErrorMessage || possibleOpeningHoursErrorMessage
-
-     if (possibleErrorMessage) {
-          res.status(400).send(possibleErrorMessage)
+     if (possibleSalonErrorMessage) {
+          res.status(400).send(possibleSalonErrorMessage)
           return
      }
 
@@ -60,7 +54,6 @@ async function createSalon(req, res) {
           salonOwnerID: client.id
      })
 
-     await addOpeningHoursInDB(openingHours, dbResultSalonDatas.id)
      //await addSalonImgs(salonImgs, dbResultSalonDatas.id)
 
      await updateSalonOwnerInDB({
