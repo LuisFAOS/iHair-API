@@ -11,7 +11,7 @@ import verifyAuth from "../middlewares/authHandler.js"
 
 
 //SingIn/Login salon owner - route
-router.get('/salon-owner/login', loginHandler)
+router.post('/salon-owner/login', loginHandler)
 
 //SingUp salon owner - route
 router.post('/salon-owner', salonOwnerControllers.create)
