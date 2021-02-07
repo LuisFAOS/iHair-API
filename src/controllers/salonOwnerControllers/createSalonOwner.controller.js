@@ -14,7 +14,7 @@ import Queue from "../../libs/queueBull/Queue.js"
 import uploadImgToAzure from "../../libs/azure/uploadImgToAzure.js"
 
 async function createSalonOwner(req, res) {
-     const salonOwner = req.body
+     const salonOwner = req.body	
 
      const possibleErrorMessage = await salonOwnerValidationHandler(salonOwner)
      if (possibleErrorMessage) {
@@ -53,7 +53,9 @@ async function createSalonOwner(req, res) {
      salonOwner.emailToken = emailToken
 
      salonOwner.profileImgUrl = await uploadImgToAzure(salonOwner.imgs.profileImgInBase64, "ownersprofileimgs")
-     //salonOwner.certificateImgUrl = await uploadImgToAzure(salonOwner.imgs.certificateImgInBase64, "ownerscertificates")
+     if(salonOwner.imgs.certificateImgInBase64){
+          salonOwner.certificateImgUrl = await uploadImgToAzure(salonOwner.imgs.certificateImgInBase64, "ownerscertificates")
+     }
      delete salonOwner.imgs
 
      await Queue.add("RegistrationEmail", {

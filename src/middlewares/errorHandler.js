@@ -1,5 +1,7 @@
+import logger from "../log"
+
 async function ErrorHandler(error, req, res, next) {
-     console.log(error)
+     logger.error(error)
      res.status(500).json({
           ErrorMessage: error.message
      })

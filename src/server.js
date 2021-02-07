@@ -1,6 +1,10 @@
-console.log("Your API is starting...")
-
 import "express-async-errors"
+
+import pinoHttp from "pino-http"
+import logger from "./log/index.js"
+
+const pinoMiddleware = pinoHttp({logger})
+logger.info("Your API is starting...")
 
 import express from "express"
 const app = express()
@@ -27,6 +31,7 @@ app.use(bodyParser.urlencoded({
 app.use(helmet())
 app.use(compression())
 app.use(bodyParser.json())
+app.use(pinoMiddleware)
 
 app.use(normalUserRoutes)
 app.use(emailConfirmationRoute)
@@ -39,4 +44,4 @@ app.use(ratingRoutes)
 
 app.use(errorHandler)
 
-app.listen(7070, () => console.log("Your API is running on: http://localhost:7070"))
+app.listen(7070, () => logger.info("Your API is running on: http://localhost:7070"))

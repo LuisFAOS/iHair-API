@@ -2,6 +2,7 @@ import QueueBull from "bull"
 import redisConfig from "../../config/redis.js"
 
 import * as jobs from "../../jobs/index.js"
+import logger from "../../log/index.js"
 
 const jobList = Object.keys(jobs).map(job => ({
      bull: new QueueBull(jobs[job].key, redisConfig),
@@ -23,8 +24,8 @@ const Queue = {
                queue.bull.process(queue.handle)
 
                queue.bull.on('failed', (job, error) => {
-                    console.log("Job failed 👎", queue.key, job.data)
-                    console.log("\nErro: ", error)
+                    logger.error(`Job failed 👎, key: ${queue.key}, data: ${job.data}`)
+                    logger.error("\nErro: ", error)
                })
           })
      }
