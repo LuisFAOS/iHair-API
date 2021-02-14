@@ -11,7 +11,7 @@ import verifyAuth from "../middlewares/authHandler.js"
 
 
 //SingIn User Route
-router.get('/normal-user/login', loginHandler)
+router.post('/normal-user/login', loginHandler)
 
 //SingUp User Route
 router.post('/normal-user', normalUserControllers.create)
