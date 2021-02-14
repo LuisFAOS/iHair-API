@@ -1,4 +1,4 @@
-import logger from "../log"
+import logger from "../log/index.js"
 
 async function ErrorHandler(error, req, res, next) {
      logger.error(error)
