@@ -3,6 +3,7 @@ import jwtGenerator from "../../libs/JWT/jwtTokenGenerator.js"
 
 import {getNormalUserFromDB} from "../../models/normalUser.models.js"
 
+import cepPromise from 'cep-promise'
 import bcrypt from "bcryptjs"
 
 async function getUserByID(req, res) {
@@ -18,7 +19,12 @@ async function getUserByID(req, res) {
 
      delete dbResultUserDatas.passwordHashed
 
-     res.status(200).send(dbResultUserDatas)
+     const userCompleteAddress = await cepPromise(dbResultUserDatas.CEP)
+
+     res.status(200).send({
+          userDatasFromDB: dbResultUserDatas,
+          userCompleteAddress,
+     })
 }
 
 async function loginHandler(req, res) {
