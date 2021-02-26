@@ -13,14 +13,16 @@ async function getSalon(req, res) {
      } = await jwtDecoder(authToken)
 
      let whereProp
-     if (permissionOf === "salonOwner")
+     if (permissionOf === "salonOwner"){
           whereProp = {
                salonOwnerID: client.id
           }
-     else
+     }     
+     else{
           whereProp = {
                id: req.query.id
           }
+     }
 
      if (whereProp) {
           const dbResultSalonDatas = await getSalonFromDB(whereProp)
@@ -29,9 +31,14 @@ async function getSalon(req, res) {
                salonID: dbResultSalonDatas.id
           })
 
+          const dbResultGeneralAvgRate = await getAvgGeneralRatingFromDB({
+               salonID: dbResultSalonDatas.id
+          })
+
           res.status(200).send({
                dbResultSalonDatas,
-               dbResultOpeningHoursDatas
+               dbResultOpeningHoursDatas,
+               dbResultGeneralAvgRate,
           })
      } else {
           res.status(400).send("ID inválido ou vázio")

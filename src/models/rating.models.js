@@ -18,3 +18,13 @@ export async function getRatingsFromDB(whereProps){
 
     return dbResultSelectQuery
 }   
+
+export async function getAvgGeneralRatingFromDB(whereProps){
+    const dbResultSelectQuery = await dbHandler("rating")
+        .avg('general as generalAvg')   
+        .where({
+            ...whereProps
+        })
+
+    return dbResultSelectQuery[0]
+}
