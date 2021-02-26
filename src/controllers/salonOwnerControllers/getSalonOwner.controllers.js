@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs"
 
 import jwtDecoder from "../../libs/JWT/jwtTokenDecoder.js"
 import jwtGenerator from "../../libs/JWT/jwtTokenGenerator.js"
+import { getSalonFromDB } from "../../models/salon.models.js"
 
 import {
      getSalonOwnerFromDB,
@@ -41,9 +42,17 @@ async function loginHandler(req, res) {
      const dbResultOwnerDatas = await getSalonOwnerAllDatasFromDB({
           email
      })
-     if (!dbResultOwnerDatas || !dbResultOwnerDatas.isVerified) {
+     if(!dbResultOwnerDatas || !dbResultOwnerDatas.isVerified) {
           res.status(400).send("O email ou não foi cadastrado ou não foi validado, verifique")
           return
+     }
+
+     const dbResultSalonDatas = await getSalonFromDB({
+          salonOwnerID: dbResultOwnerDatas.id,
+     })
+     if(!dbResultSalonDatas || !dbResultSalonDatas.isVerified){
+          res.status(400).send("Seu salão ainda não foi aprovado, volte mais tarde.")
+          return  
      }
 
      const isValidPassword = await bcrypt.compare(password, dbResultOwnerDatas.passwordHashed)
