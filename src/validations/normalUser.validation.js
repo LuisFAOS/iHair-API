@@ -1,5 +1,5 @@
 import cepPromise from "cep-promise"
-import normalUserSchema from "./schemas/normalUser.schema.js"
+import normalUserSchema from "./schemas/normalUser.schema"
 
 async function normalUserValidationHandler(userDatas) {
      try {

@@ -1,4 +1,4 @@
-import salonImgSchema from "./schemas/salonImg.schema.js"
+import salonImgSchema from "./schemas/salonImg.schema"
 
 
 async function salonImgValidationHandler(salonImgsInBase64) {

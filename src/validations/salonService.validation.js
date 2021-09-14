@@ -1,4 +1,4 @@
-import salonServiceSchema from "./schemas/salonService.schema.js"
+import salonServiceSchema from "./schemas/salonService.schema"
 
 
 async function salonServiceValidationHandler(salonServicesArray) {

@@ -2,8 +2,8 @@ import cepPromise from "cep-promise"
 import {
      cnpj
 } from "cpf-cnpj-validator"
-import salonSchema from "./schemas/salon.schema.js"
-import base64Schema from "./schemas/base64.schema.js"
+import salonSchema from "./schemas/salon.schema"
+import base64Schema from "./schemas/base64.schema"
 
 async function salonValidationHandler(salonDatas, isUpdate) {
      try {
@@ -27,7 +27,6 @@ async function salonValidationHandler(salonDatas, isUpdate) {
      } catch (error) {
           return error.message
      }
-
 }
 
 export default salonValidationHandler

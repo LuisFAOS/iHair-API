@@ -8,8 +8,8 @@
 
 
 ### 📚 O que eu aprendi de novo!:
-> #### Usar AZURE e SENDGRID: 
-> Nesse projeto eu utilizei serviços como o SENDGRID(envio de email) e AZURE(upload de imgs e futuramente deploy), serviços esses que eu não tinha utilizado antes;
+> #### Usar AZURE(upload de imagem e possivelmente deploy) e SENDGRID(envio de email): 
+> Nesse projeto eu utilizei serviços como o SENDGRID e AZURE, serviços esses que eu não tinha utilizado antes;
 
 > #### Utilizar a "técnica" de filas:
 > Utilizei essa "técnica" na parte de envio de emails. Ajudou a aplicar retentativas, visualizar possiveis erros, minimizar a utilização de recursos da aplicação, entre outros. Aqui eu utilizei o BULL(lib para minupulação de filas) e o REDIS(para armazenar as filas);

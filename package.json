@@ -1,14 +1,13 @@
 {
-  "name": "ihair-api",
+  "name": "ibeauty-backend",
   "version": "1.0.0",
-  "type": "module",
-  "description": "ihair api",
+  "description": "ibeauty backend(queue, websocket(socket.io), http)",
   "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm-run-all -p dev:*",
-    "dev:server": "nodemon src/server.js",
-    "dev:queue": "nodemon src/queue"
+    "dev:server": "ts-node-dev src/server",
+    "dev:queue": "ts-node-dev src/queue"
   },
   "author": "LuisFaos",
   "license": "ISC",
@@ -40,10 +39,17 @@
     "pino": "^6.11.0",
     "pino-http": "^5.5.0",
     "pino-pretty": "^4.5.0",
-    "pm2": "^4.5.4",
+    "pm2": "^4.5.6",
     "redis": "^3.0.2",
     "sendgrid": "2.0.0",
+    "socket.io": "^4.0.0",
     "uuid": "^8.3.2",
     "yup": "^0.32.8"
+  },
+  "devDependencies": {
+    "@types/compression": "^1.7.0",
+    "@types/express": "^4.17.11",
+    "ts-node-dev": "^1.1.6",
+    "typescript": "^4.2.4"
   }
 }

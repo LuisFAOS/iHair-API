@@ -1,12 +1,12 @@
-import ratingSchema from "./schemas/rating.schema.js";
+import salonRatingSchema from "./schemas/salonRating.schema";
 
 
 async function ratingValidationHandler(numericRatings, comment) {
     try {
-        await ratingSchema.validate({general: numericRatings.general, comment})
+        await salonRatingSchema.validate({general: numericRatings.general, comment})
         
         Object.values(numericRatings).forEach(async numericRating => {
-            await ratingSchema.validate({general: numericRatings.general, numericRating})
+            await salonRatingSchema.validate({general: numericRatings.general, numericRating})
         })
     } catch (error) {
         return error.message

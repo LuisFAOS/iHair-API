@@ -1,7 +1,11 @@
-import salonOwnerSchema from "./schemas/salonOwner.schema.js"
-import base64Schema from "./schemas/base64.schema.js"
+import salonOwnerSchema from "./schemas/salonOwner.schema"
+import base64Schema from "./schemas/base64.schema"
 
-async function salonOwnerValidationHandler(sOwnerDatas,isUpdate) {
+async function salonOwnerValidationBuilder(){
+
+}
+
+async function salonOwnerValidationHandler(sOwnerDatas, isUpdate) {
      try {
           if(!isUpdate){
                const matchesBlobImg = sOwnerDatas.imgs.profileImgInBase64.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
